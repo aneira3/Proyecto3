@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <script th:src="@{/css/jquery.min.js}"></script>
+    <script th:src="@{/css/bootstrap.min.js}"></script>
+</head>
+<body>
+    <h1>Reserva de Servicios</h1>
+    <div>
+        <a th:href='@{ResSer/new}' class="btn btn-primary">Añadir Reserva de Servicio</a>
+        <a th:href='@{/}' class="btn btn-primary">Volver Atrás</a>
+    </div>
+    <div class="container w-25">
+        <div class="card border border-2 mx-auto">
+
+            <h5 class="card-header" role='button' id="headingOne">
+                <a href="#" class="collapsed d-block" data-toggle="collapse" data-target="#busqueda">
+
+                    Búsqueda avanzada
+                </a>
+
+            </h5>
+
+            <div id="busqueda" class="collapse">
+                <form th:action="@{ResSer}" method="get">
+                    <label class="col-form-label">Nombre del Cliente:</label>
+                    <input class="form-control" type="text" id="tipo" name="tipo" />
+
+                    <br>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-secondary">Buscar por Nombre de Cliente</button>
+                    </div>
+
+                    <br />
+                </form>
+            </div>
+        </div>
+    </div>
+    <br />
+
+
+    <table class="table table-condensed table-hover table-bordered" style="border-collapse:collapse;">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre Cliente</th>
+                <th>Numero de Habitacion</th>
+                <th>Fecha de Consumo</th>
+                <th>Servicio Consumido</th>
+                <th>Costo total</th>
+                <th>Duracion del Consumo</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="servicio : ${INFO}">
+                <tr>
+                    <td th:text="${servicio._id}"></td>
+                    <td th:text="${servicio.cliente.nombre}"></td>
+                    <td th:text="${servicio.numero_habitacion}"></td>
+                    <td th:text="${servicio.fecha}"></td>
+                    <th:block th:each="obj : ${servicio.servicio}">
+                        <td th:text="${obj.tipo}"></td>
+                    </th:block>
+                    <td th:text="${servicio.costo}"></td>
+                    <td th:text="${servicio.duracion}"></td>
+                    <td>
+                        <a th:href="@{ResSer/{id}/edit(id=${servicio.cliente.nombre})}">Editar</a>
+                        <a th:href="@{ResSer/{id}/delete(id=${servicio._id})}"
+                            onclick="return confirm('¿Estás seguro de borrar esta Reserva de Servicio?')">Borrar</a>
+                    </td>
+                </tr>
+
+            </th:block>
+        </tbody>
+    </table>
+</body>
+</html>

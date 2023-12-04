@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear Servicio</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+
+</head>
+<body>
+    </br>
+    <form th:action="@{/ResSer/new/save}" method="post">
+    <div th:replace="~{fragments/ResSerForm :: ResSerForm(titulo='Crear Reserva de Servicio')}">
+    </div>
+    </form>
+</body>
+</html>

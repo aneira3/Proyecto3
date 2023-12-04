@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <title>Hotel</title>
+</head>
+<style>
+    a{
+      margin: 5px;
+    }
+  </style>
+<body>
+    <div class="container mx-auto w-25">
+    <h1>HotelAndes</h1>
+    <img th:src="@{/images/logo.png}" width="250">
+
+    <div style="margin: 10px;">
+      <div>  
+        <h3>CRUD</h3>
+        <a th:href="@{/servicios}" class="btn btn-primary">Servicios</a>
+        <a th:href="@{/habitaciones}" class="btn btn-primary">Habitaciones</a>
+        <a th:href="@{/tipos}" class="btn btn-primary">Tipo de Habitaciones</a>
+        <a th:href="@{/ResHab}" class="btn btn-primary">Reserva de Habitaciones</a>
+        <a th:href="@{/ResSer}" class="btn btn-primary">Consumos</a>
+        <a th:href="@{/in}" class="btn btn-primary">Check-In</a>
+        <a th:href="@{/out}" class="btn btn-primary">Check-Out</a>
+      </div>
+
+
+    </div>
+   
+    
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <script th:src="@{/css/jquery.min.js}"></script>
+    <script th:src="@{/css/bootstrap.min.js}"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container w-25">
+        <div class="card border border-2 mx-auto">
+
+            <h5 class="card-header" role='button' id="headingOne">
+                <a href="#" class="collapsed d-block" data-toggle="collapse" data-target="#busqueda">
+
+                    Búsqueda por Fecha y Numero de Identificación
+                </a>
+
+            </h5>
+
+            <div id="busqueda" class="collapse">
+                <form th:action="@{/servicios/req3}" method="get">
+                    <label class="col-form-label">Fecha de Inicio:</label>
+                    <input class="form-control" type="date" id="fecha1" name="fecha" />
+                    <label class="col-form-label">Fecha Final:</label>
+                    <input class="form-control" type="date" id="fecha2" name="fecha2" />
+                    <label class="col-form-label">Numero Documento:</label>
+                    <input class="form-control" type="text" id="documento" name="documento" />
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-secondary">Buscar por Fecha y Numero de Identificación</button>
+                    </div>
+
+                    <br />
+                </form>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h1>Requerimiento 3 - Consumos por Usuario y Fecha</h1>
+            <table class="table table-condensed table-hover table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Numero de Identificación del Usuario</th>
+                    <th>Nombre del Usuario</th>
+                    <th>Servicio Consumido</th>
+                    <th>Duracion del Consumo</th>
+                    <th>Fecha</th>
+                    <th>Dinero Invertido en el Consumo</th>
+                  </tr>
+                </thead>
+                <th:block th:each="servicio:${INFO}">
+                  <tr>
+                    <td th:text="${servicio.cliente.numero_documento}"></td>
+                    <td th:text="${servicio.cliente.nombre}"></td>
+                    <th:block th:each="s:${servicio.servicio}">
+                    <td th:text="${s.tipo}"></td>
+                    </th:block>
+                    <td th:text="${servicio.duracion}"></td>
+                    <td th:text="${servicio.fecha}"></td>
+                    <td th:text="${servicio.costo}"></td>
+                </tr>
+                </th:block>
+            <div class="text-center">
+                <a th:href="@{/}" class="btn btn-primary">Volver a Pagina Principal</a>
+            </div>
+        </div>
+</body>
+</html>
