@@ -1,0 +1,395 @@
+CRUD REQUERIMIENTO 1
+
+//CREATE
+db.tipo_habitacion.insertMany([
+    { "tipo": "suite", "amenidades": ["minibar", "vista panorámica", "sala de estar"] },
+    { "tipo": "familiar", "amenidades": ["cunas disponibles", "servicio de niñera", "habitaciones comunicadas"] },
+    { "tipo": "doble", "amenidades": ["dos camas individuales", "TV por cable", "wifi gratis"] }
+]);
+
+//READ
+db.tipo_habitacion.findOne({ "tipo": "suite" });
+db.tipo_habitacion.findOne({ "tipo": "doble" });
+db.tipo_habitacion.findOne({ "tipo": "familiar" });
+
+
+//UPDATE
+db.tipo_habitacion.updateOne(
+    { "tipo": "suite" },
+    { $push: { "amenidades": "servicio de habitaciones premium" } }
+);
+
+db.tipo_habitacion.updateOne(
+    { "tipo": "doble" },
+    { $push: { "amenidades": "vista panoramica" } } 
+);
+
+db.tipo_habitacion.updateOne(
+    { "tipo": "familiar" },
+    { $push: { "amenidades": "wifi gratis" } }
+);
+
+//DELETE
+
+db.tipo_habitacion.deleteOne({ "tipo": "familiar" });
+db.tipo_habitacion.deleteOne({ "tipo": "doble" });
+db.tipo_habitacion.deleteOne({ "tipo": "suite" });
+
+CRUD REQUERIMIENTO 2 
+//CREATE
+db.habitaciones.insertOne({
+  "numero_habitacion": 101,
+  "costo": NumberDecimal("500"),
+  "tipo": "suite presidencial",
+  "capacidad": 6
+})
+//DELEATE
+db.habitaciones.deleteOne({ "_id": ObjectId("656273cb92ebc254b72724e3") })
+//FIND
+db.habitaciones.findOne({ "_id": ObjectId("656273cb92ebc254b72724e3") })
+//UPDATE 
+db.habitaciones.updateOne({_id:ObjectId("656273cb92ebc254b72724e3")},
+{$set:{tipo:"suite"}})
+
+
+//CRUD REQUERIMIENTO 3
+
+//CREATE SERVICIOS_RESERVABLES
+db.servicios_reservables.insertOne({
+    "tipo": "Spa Service",
+    "costo_por_horas": 50.00,
+    "capacidad": 3
+});
+
+//READ SERVICIOS_RESERVABLES
+
+db.servicios_reservables.findOne({ "tipo": "Spa Service" });
+
+//UPDATE SERVICIOS_RESERVABLES
+
+db.servicios_reservables.updateOne(
+    { "tipo": "Spa Service" },
+    { $set: { "costo_por_horas": 60.00 } }
+);
+
+//DELETE SERVICIOS_RESERVABLES
+
+db.servicios_reservables.deleteOne({ "tipo": "Spa Service" });
+CRUD REQUERIMIENTO 4 
+//CREATE
+db.reserva_habitacion.insertOne({
+  "fechaEntrada": ISODate("2023-09-16"),
+  "fechaSalida": ISODate("2023-09-22"),
+  "costo_total": NumberDecimal("820.04"),
+  "numero_habitacion": 202,
+  "plan_consumo": "Larga estadia",
+  "cliente": {
+    "numero_documento": "637-10-9108",
+    "tipo_documento": "Pasaporte",
+    "nombre": "Morganne Sutheran",
+    "correo": "msutheran0@blogspot.com"
+  }
+})
+//DELATE
+db.reserva_habitacion.deleteOne({ "_id": ObjectId("656a43540caa5a46fc2e64ad") })
+//FIND
+db.reserva_habitacion.findOne({ "_id": ObjectId("656a43540caa5a46fc2e64ad") })
+//UPDATE
+db.reserva_habitacion.updateOne(
+  { "_id": ObjectId("656a43540caa5a46fc2e64ad") },
+  {
+    $set: {
+      
+      "plan_consumo": "Estadia corta"
+     
+    }
+  }
+)
+
+
+//CREATE PRODUCTOS
+
+db.productos.insertMany([
+    { "nombre": "juice", "costo": 15.00, "tipo": "restaurant" },
+    { "nombre": "eggs", "costo": 5.00, "tipo": "supermarket" },
+    { "nombre": "wine", "costo": 12.00, "tipo": "bar" }
+]);
+
+//READ PRODUCTOS
+
+db.productos.findOne({ "nombre": "juice" });
+db.productos.findOne({ "nombre": "eggs" });
+db.productos.findOne({ "nombre": "wine" });
+
+//UPDATE PRODUCTOS
+
+db.productos.updateOne(
+    { "nombre": "juice" },
+    { $set: { "costo": 20.00 } }
+);
+
+db.productos.updateOne(
+    { "nombre": "eggs" },
+    { $set: { "costo": 10.00 } }
+);
+
+db.productos.updateOne(
+    { "nombre": "wine" },
+    { $set: { "costo": 15.00 } }
+);
+
+
+//DELETE PRODUCTOS
+
+db.productos.deleteOne({ "nombre": "juice" });
+db.productos.deleteOne({ "nombre": "eggs" });
+db.productos.deleteOne({ "nombre": "wine" });
+
+
+//CREATE CONSUMO_Y_INSTALACION
+
+db.consumo_y_instalacion.insertOne({
+    "tipo": "sauna",
+    "costo": 12.00
+});
+
+//READ CONSUMO_Y_INSTALACION
+
+db.consumo_y_instalacion.findOne({ "tipo": "sauna" });
+
+//UPDATE CONSUMO_Y_INSTALACION
+
+db.consumo_y_instalacion.updateMany(
+    { "tipo": "sauna" },
+    { $set: { "costo": 10.00 } }
+);
+
+//DELETE CONSUMO_Y_INSTALACION
+
+db.consumo_y_instalacion.deleteOne({ "tipo": "sauna" });
+
+
+
+//CRUD REQUERIMIENTO 5
+
+//DECIMAL128 SE USA POR QUE ES UNA MONEDA Y NO SE PUEDE USAR DOUBLE POR QUE NO ES PRECISO
+
+//CREATE 
+db.reserva_habitacion.insertOne({
+    fechaEntrada: new Date("2023-12-01T00:00:00.000Z"),
+    fechaSalida: new Date("2023-12-10T00:00:00.000Z"),
+    costo_total: Decimal128("500.00"),
+    numero_habitacion: 101,
+    plan_consumo: "Plan Básico",
+    cliente: {
+      numero_documento: "123456789",
+      tipo_documento: "DNI",
+      nombre: "Juan Pérez",
+      correo: "juan.perez@email.com"
+    }
+  });
+
+  
+//READ
+
+db.reserva_habitacion.find({ fechaEntrada: new Date("2023-12-01T00:00:00.000Z") });
+
+//DECIMAL128 SE USA POR QUE ES UNA MONEDA Y NO SE PUEDE USAR DOUBLE POR QUE NO ES PRECISO
+
+//UPDATE
+
+db.reserva_habitacion.updateOne(
+    { fechaEntrada: new Date("2023-12-01T00:00:00.000Z") },
+    { $set: { "costo_total": Decimal128("550.00"), "plan_consumo": "Plan Premium" } }
+  );
+
+//DELETE
+
+
+
+db.reserva_habitacion.deleteOne({ fechaEntrada: new Date("2023-12-01T00:00:00.000Z") });
+
+
+
+//CRUD REQUERIMIENTO 7
+
+//CREATE 1 Asumiendo que el cliente ya existe en la base de datos
+db.reserva_habitacion.updateOne(
+    { "cliente.numero_documento": "123456789", "fechaSalida": null }, // Busca una reserva sin fecha de salida
+    { $set: { "fechaSalida": new Date("2023-12-10T00:00:00.000Z") } } // Establece la fecha de salida
+  );
+
+//READ 1  Asumiendo que el cliente ya existe en la base de datos
+
+db.reserva_habitacion.find({ "fechaSalida": new Date("2023-12-10T00:00:00.000Z") });
+
+//UPDATE 1 Asumiendo que el cliente ya existe en la base de datos
+
+db.reserva_habitacion.updateOne(
+    { "cliente.numero_documento": "123456789", "fechaSalida": new Date("2023-12-10T00:00:00.000Z") },
+    { $set: { "fechaSalida": new Date("2023-12-11T00:00:00.000Z") } } // Nueva fecha de salida
+);
+
+//DELETE 1 Asumiendo que el cliente ya existe en la base de datos
+
+db.reserva_habitacion.updateOne(
+    { "cliente.numero_documento": "123456789", "fechaSalida": new Date("2023-12-11T00:00:00.000Z") },
+    { $unset: { "fechaSalida": "" } } // Elimina la fecha de salida
+  );
+
+
+//CREATE 2 Asumiendo que el cliente no existe en la base de datos
+
+db.reserva_habitacion.insertOne({
+    fechaEntrada: new Date("2023-12-01T00:00:00.000Z"),
+    fechaSalida: new Date("2023-12-10T00:00:00.000Z"), // Fecha de salida
+    costo_total: Decimal128("500.00"),
+    numero_habitacion: 101,
+    plan_consumo: "Plan Básico",
+    cliente: {
+      numero_documento: "123456789",
+      tipo_documento: "DNI",
+      nombre: "Nuevo Cliente",
+      correo: "nuevo.cliente@email.com"
+    }
+  });
+
+  
+//READ 2 Asumiendo que el cliente no existe en la base de datos
+
+db.reserva_habitacion.find({ "fechaSalida": new Date("2023-12-10T00:00:00.000Z") });
+
+//UPDATE 2 Asumiendo que el cliente no existe en la base de datos
+
+
+db.reserva_habitacion.updateOne(
+    { "cliente.numero_documento": "123456789", "fechaSalida": new Date("2023-12-10T00:00:00.000Z") },
+    { $set: { "fechaSalida": new Date("2023-12-11T00:00:00.000Z") } }
+  );
+
+//DELETE 2 Asumiendo que el cliente no existe en la base de datos
+
+db.reserva_habitacion.deleteOne({ "fechaSalida": new Date("2023-12-10T00:00:00.000Z") });
+
+// REQUERIMIENTO 1 CONSULTA 
+db.reserva_servicio.aggregate([{$match:{"fecha": { $gte: ISODate("2023-01-01"),  $lte: ISODate("2024-01-01")}}},
+    {
+        $group: {
+            _id: "$numero_habitacion",  
+            totalCantidades: { $sum: "$costo" }  
+        }
+    }
+])
+
+
+
+// CONSULTA REQURIMIENTO 2 CLIENTES EXCELENTES
+
+
+db.reserva_habitacion.aggregate([
+    {
+      // Filtrar reservas en el año específico
+      $match: {
+        fechaEntrada: { $gte: new Date("2023-01-01T00:00:00.000Z"), $lt: new Date("2024-01-01T00:00:00.000Z") }
+      }
+    },
+    {
+      // Extraer el año y el trimestre de la fecha de entrada
+      $project: {
+        "cliente.numero_documento": 1,
+        "cliente.nombre": 1,
+        trimestre: { $ceil: { $divide: [{ $month: "$fechaEntrada" }, 3] } }
+      }
+    },
+    {
+      // Agrupar por cliente y trimestre
+      $group: {
+        _id: { numero_documento: "$cliente.numero_documento", nombre: "$cliente.nombre", trimestre: "$trimestre" },
+        count: { $sum: 1 }
+      }
+    },
+    {
+      // Agrupar por cliente y contar los trimestres únicos
+      $group: {
+        _id: { numero_documento: "$_id.numero_documento", nombre: "$_id.nombre" },
+        trimestresUnicos: { $addToSet: "$_id.trimestre" }
+      }
+    },
+    {
+      // Filtrar clientes que tienen reservas en los 4 trimestres
+      $match: {
+        "trimestresUnicos": { $size: 4 }
+      }
+    },
+    {
+      // Proyectar la información del cliente
+      $project: {
+        _id: 0,
+        numero_documento: "$_id.numero_documento",
+        nombre: "$_id.nombre"
+      }
+    }
+  ]);
+
+// REQUERIMIENTO CONSULTA 3 
+
+  db.reserva_habitacion.find(
+  {
+    "cliente.numero_documento": "637-10-9108",
+    "fechaEntrada": {
+      $gte: ISODate("2023-09-16"),
+      $lte: ISODate("2023-09-22")
+    }
+  },
+  {
+    _id: 0, 
+    costo_total: 1 
+  }
+)
+
+  //CONSULTA AVANZADA  REQUERIMIENTO 10
+/**
+ 
+ * Calcular el Porcentaje de Ocupación: Divide el número total de días ocupados para cada habitación por el número total de días en el año y multiplica por 100 para obtener el porcentaje de ocupación.
+ */
+db.reserva_habitacion.aggregate([
+    {
+      $match: {
+        fechaEntrada: { $gte: new Date("2022-12-02T00:00:00.000Z") },
+        fechaSalida: { $lte: new Date("2023-12-01T23:59:59.999Z") }
+      }
+    },
+    {
+      $project: {
+        numero_habitacion: 1,
+        diasOcupada: { $subtract: ["$fechaSalida", "$fechaEntrada"] }
+      }
+    },
+    {
+      $group: {
+        _id: "$numero_habitacion",
+        totalDiasOcupados: { $sum: "$diasOcupada" }
+      }
+    },
+    {
+      $project: {
+        porcentajeOcupacion: {
+          $multiply: [{ $divide: ["$totalDiasOcupados", (365 * 24 * 60 * 60 * 1000)] }, 100]
+        }
+      }
+    }
+  ]);
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
